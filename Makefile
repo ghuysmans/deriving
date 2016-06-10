@@ -2,6 +2,7 @@
 # DO NOT EDIT (digest: 9a60866e2fa295c5e33a3fe33b8f3a32)
 
 SETUP = ./setup.exe
+RM = rm -f
 
 build: setup.data $(SETUP)
 	$(SETUP) -build $(BUILDFLAGS)
@@ -38,7 +39,7 @@ configure: $(SETUP)
 	$(SETUP) -configure $(CONFIGUREFLAGS)
 
 setup.exe: setup.ml
-	ocamlfind ocamlopt -o $@ -linkpkg -package oasis.dynrun $< || ocamlfind ocamlc -o $@ -linkpkg -package oasis.dynrun $< || true
+	ocamlfind ocamlopt -o $@ -linkpkg -package oasis.dynrun setup.ml || ocamlfind ocamlc -o $@ -linkpkg -package oasis.dynrun setup.ml || true
 	$(RM) setup.cmi setup.cmo setup.cmx setup.o
 
 .PHONY: build doc test all install uninstall reinstall clean distclean configure
